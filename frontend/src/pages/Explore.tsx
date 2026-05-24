@@ -14,7 +14,7 @@ export const Explore: React.FC = () => {
 <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">link</span>
 <input className="w-full bg-surface-container-highest border border-white/10 rounded-lg py-4 pl-12 pr-4 font-label-md text-label-md text-on-surface placeholder:text-outline input-glow transition-all" placeholder="Paste playlist link here..." type="text" />
 </div>
-<button className="bg-primary-container text-on-primary-container px-8 py-4 rounded-lg font-headline-sm text-headline-sm hover:opacity-90 transition-opacity flex items-center gap-2" onClick="document.getElementById('import-modal').classList.remove('hidden')">
+<button className="bg-primary-container text-on-primary-container px-8 py-4 rounded-lg font-headline-sm text-headline-sm hover:opacity-90 transition-opacity flex items-center gap-2" onClick={() => document.getElementById('import-modal')?.classList.remove('hidden')}>
 <span className="material-symbols-outlined">download</span>
                         Import
                     </button>

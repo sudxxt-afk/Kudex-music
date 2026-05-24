@@ -21,7 +21,7 @@ export const Settings: React.FC = () => {
 <p className="font-label-md text-on-surface-variant">Visual aesthetic.</p>
 </div>
 <select className="custom-select w-full bg-surface-container-low border border-outline-variant text-on-surface font-body-md text-sm rounded-lg py-2.5 px-4 focus:outline-none focus:ring-1 focus:ring-primary transition-colors cursor-pointer">
-<option selected="" value="tokyo-night">Tokyo Night</option>
+<option defaultValue="tokyo-night" value="tokyo-night">Tokyo Night</option>
 <option value="gruvbox">Gruvbox Dark</option>
 <option value="oled">OLED Black</option>
 </select>
@@ -89,7 +89,7 @@ export const Settings: React.FC = () => {
 </div>
 <select className="custom-select w-full sm:w-48 bg-surface-container-low border border-outline-variant text-on-surface font-body-md text-sm rounded-lg py-2.5 px-4 focus:outline-none cursor-pointer">
 <option value="low">Low (64kbps)</option>
-<option selected="" value="normal">Normal (128kbps)</option>
+<option defaultValue="normal" value="normal">Normal (128kbps)</option>
 <option value="high">High (320kbps)</option>
 </select>
 </div>
