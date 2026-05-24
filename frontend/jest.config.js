@@ -6,5 +6,6 @@ module.exports = {
     '^.+\\.tsx?$': ['ts-jest', {
       tsconfig: 'tsconfig.json'
     }]
-  }
+  },
+  setupFiles: ['<rootDir>/jest.setup.js']
 };

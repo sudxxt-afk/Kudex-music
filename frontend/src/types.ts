@@ -5,6 +5,7 @@ export interface Track {
   sourceId: string;
   sourceName: string;
   duration?: number;
+  coverUrl?: string;
 }
 
 export interface Playlist {

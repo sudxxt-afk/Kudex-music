@@ -4,10 +4,10 @@ import fakeredis
 from fastapi_limiter import FastAPILimiter
 import logging
 
-from main import app
+from src.main import app
 from src.core.limiter import rate_limit_callback
 from src.core.security import create_access_token
-from models import User
+from src.db.models import User
 from test_api import db_session, client, setup_db, override_get_db
 
 

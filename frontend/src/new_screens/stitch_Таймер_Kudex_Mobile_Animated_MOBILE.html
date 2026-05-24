@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kudex Music - Pomodoro Timer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .timer-glow {
+            box-shadow: 0 0 60px -15px rgba(157, 78, 221, 0.4);
+        }
+        .glass-panel {
+            background: rgba(28, 27, 28, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.5; }
+            50% { transform: scale(1.05); opacity: 0.2; }
+            100% { transform: scale(0.95); opacity: 0.5; }
+        }
+        .animate-pulse-slow {
+            animation: pulse-ring 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-color: #131314;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#131314",
+                        "secondary": "#ecffe3",
+                        "tertiary-fixed": "#ffdea9",
+                        "primary": "#e0b6ff",
+                        "outline-variant": "#4d4353",
+                        "on-secondary": "#003907",
+                        "tertiary-container": "#9a6d00",
+                        "tertiary-fixed-dim": "#ffba27",
+                        "surface-dim": "#131314",
+                        "surface-container-highest": "#353436",
+                        "primary-fixed": "#f2daff",
+                        "on-background": "#e5e2e3",
+                        "on-primary-fixed-variant": "#6a0baa",
+                        "on-error-container": "#ffdad6",
+                        "surface-variant": "#353436",
+                        "primary-fixed-dim": "#e0b6ff",
+                        "on-primary-fixed": "#2e004e",
+                        "secondary-fixed": "#72ff70",
+                        "secondary-fixed-dim": "#00e639",
+                        "surface": "#131314",
+                        "secondary-container": "#13ff43",
+                        "on-secondary-container": "#007117",
+                        "on-surface-variant": "#d0c2d5",
+                        "on-tertiary": "#422c00",
+                        "on-primary-container": "#fffdff",
+                        "surface-tint": "#e0b6ff",
+                        "on-secondary-fixed": "#002203",
+                        "error-container": "#93000a",
+                        "surface-bright": "#3a393a",
+                        "outline": "#998d9e",
+                        "on-surface": "#e5e2e3",
+                        "surface-container-low": "#1c1b1c",
+                        "surface-container-lowest": "#0e0e0f",
+                        "on-tertiary-fixed": "#271900",
+                        "surface-container-high": "#2a2a2b",
+                        "on-secondary-fixed-variant": "#00530e",
+                        "on-primary": "#4c007d",
+                        "error": "#ffb4ab",
+                        "inverse-primary": "#8433c4",
+                        "on-tertiary-fixed-variant": "#5e4100",
+                        "surface-container": "#201f20",
+                        "tertiary": "#ffba27",
+                        "inverse-on-surface": "#313031",
+                        "primary-container": "#9d4edd",
+                        "on-error": "#690005",
+                        "on-tertiary-container": "#fffdff",
+                        "inverse-surface": "#e5e2e3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sidebar-width": "280px",
+                        "margin-page": "32px",
+                        "stack-gap": "16px",
+                        "section-gap": "48px",
+                        "gutter": "24px",
+                        "player-height": "96px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Inter"],
+                        "label-md": ["Geist"],
+                        "display-lg-mobile": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["Geist"],
+                        "body-md": ["Inter"],
+                        "display-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "display-lg-mobile": ["32px", {"lineHeight": "1.1", "fontWeight": "800"}],
+                        "headline-md": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background min-h-screen overflow-x-hidden pb-32">
+<!-- Animated Background Canvas -->
+<canvas id="particle-canvas"></canvas>
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 bg-background/40 backdrop-blur-md flex items-center justify-between px-6 h-16 transition-opacity">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary cursor-pointer">menu</span>
+<h1 class="font-display-lg-mobile text-display-lg-mobile font-black tracking-tighter text-primary">Kudex</h1>
+</div>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-primary/20">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A professional close-up studio portrait of a modern music enthusiast with soft, cinematic lighting. The individual has a focused expression, reflecting a high-performance lifestyle. The color palette is dominated by deep charcoal tones and subtle purple neon highlights, maintaining the nocturnal tech-forward aesthetic of the Kudex brand. The background is a blurred metropolitan nightscape." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSNDO1ssllyvJ63jWNtUxTRMD-oTg8VkcQ4dIYq032vzC96eae2PWHdU4zz1N7BlPPKcRPHfhDKWDm44lppP1fOdCvl5LMh1E6o9TmoWwZgZ0J9N36tGshMnoPZGmktIxsGG2GM_PavITFzeO5v0f2hQP2nSbCb6F8nflziXcFDgMl7E_xqd2guYlp_E1c8cEGjtw8lQfCGP3_W_XfJS6Z_hZAjgSvaQe5z7DW4v1M8JXuwZSX4suNuWqKybjQ489dDBkW48efhwk"/>
+</div>
+</header>
+<main class="pt-24 px-6 max-w-lg mx-auto relative z-10">
+<!-- Timer Section -->
+<section class="flex flex-col items-center justify-center py-8">
+<div class="relative flex items-center justify-center w-72 h-72">
+<!-- SVG Progress Ring -->
+<svg class="absolute inset-0 w-full h-full -rotate-90">
+<circle class="text-surface-container-highest" cx="144" cy="144" fill="transparent" r="130" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary transition-all duration-1000 ease-linear" cx="144" cy="144" fill="transparent" id="progress-ring" r="130" stroke="currentColor" stroke-dasharray="816" stroke-dashoffset="200" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<!-- Inner Timer Content -->
+<div class="z-10 text-center">
+<span class="font-display-lg-mobile text-[64px] font-black tracking-tight text-on-background" id="timer-display">25:00</span>
+<p class="font-label-sm text-label-sm text-on-surface-variant tracking-[0.2em] uppercase mt-[-8px]">Focus Session</p>
+</div>
+<!-- Atmospheric Pulse -->
+<div class="absolute inset-0 rounded-full bg-primary/5 animate-pulse-slow"></div>
+</div>
+<!-- Play/Pause Controls -->
+<div class="mt-12 flex items-center gap-8">
+<button class="w-12 h-12 flex items-center justify-center rounded-full border border-outline-variant/30 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[28px]">refresh</span>
+</button>
+<button class="w-20 h-20 flex items-center justify-center rounded-full bg-primary text-on-primary timer-glow active:scale-95 transition-all" id="main-play-btn">
+<span class="material-symbols-outlined text-[40px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+<button class="w-12 h-12 flex items-center justify-center rounded-full border border-outline-variant/30 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[28px]">skip_next</span>
+</button>
+</div>
+<!-- Presets -->
+<div class="mt-10 flex gap-4">
+<button class="px-6 py-2 rounded-full glass-panel font-label-md text-label-md text-primary border-primary/40">25 min</button>
+<button class="px-6 py-2 rounded-full glass-panel font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors">50 min</button>
+<button class="px-6 py-2 rounded-full glass-panel font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors">15 min</button>
+</div>
+</section>
+<!-- Integrated Playlists Section -->
+<section class="mt-12 pb-12">
+<div class="flex items-center justify-between mb-6">
+<h2 class="font-headline-sm text-headline-sm">Integrated Study Playlists</h2>
+<span class="material-symbols-outlined text-primary">arrow_forward</span>
+</div>
+<div class="grid grid-cols-1 gap-4">
+<!-- Playlist Card 1 -->
+<div class="flex items-center gap-4 p-4 glass-panel rounded-xl group active:scale-[0.98] transition-transform">
+<div class="w-16 h-16 rounded-lg overflow-hidden shrink-0 relative">
+<img class="w-full h-full object-cover" data-alt="A high-contrast digital art piece featuring deep violet and neon emerald patterns that resemble sound waves in a digital void. The visual style is sleek and immersive, perfectly matching the nocturnal, tech-forward aesthetic of an audiophile's music streaming experience. The composition is minimalist with sharp geometric edges and soft glowing gradients." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvt6YSpZ1MLprrNWfeJXdoZByVSf_KZxkq7S_UFIoWR3EZD24i-yCzATET3ofxdVgIqSfh5iVc7wRPhrVGnx4DndJvV-rSddueoaPUVdZJe1QUUmp0j3lYFnK5i9s1x5faoR97hE1TU0LWPywhfaqZITahf-PlzbANTu41EWtSv65sLI0hHX9Aa9ummpngV-aw7mrGZZv3sbEJa7Cm9xIWnRBaT9ELx9oDkC-jRccl6dGkT8pTU-bq-NIxlqrQJXPGFmmoEgIpJRQ"/>
+<div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+</div>
+</div>
+<div class="flex-1">
+<h3 class="font-body-md text-body-md font-semibold text-on-background">Deep Focus Coding</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Lofi &amp; Ambient Synth • 120 Tracks</p>
+</div>
+<div class="flex flex-col items-end gap-1">
+<span class="material-symbols-outlined text-primary text-[20px]">graphic_eq</span>
+<p class="font-label-sm text-[10px] text-primary uppercase">Active</p>
+</div>
+</div>
+<!-- Playlist Card 2 -->
+<div class="flex items-center gap-4 p-4 glass-panel rounded-xl group active:scale-[0.98] transition-transform">
+<div class="w-16 h-16 rounded-lg overflow-hidden shrink-0 relative">
+<img class="w-full h-full object-cover" data-alt="An atmospheric visualization of a calm metropolitan night sky with subtle light leaks in Tokyo Purple and Hacker Green. The image evokes a sense of deep focus and tranquility. The style is modern minimalist with a slight grainy texture, reflecting a sophisticated lean-back music experience for late-night developers and deep-thinkers." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtqcJEEVgLmLU8NKR-HE1iXLClSsrw9vTz8ithpeeR13RJRxO5dADJtuxzkuavJmwY8qzQ7xfI4EWEtfMP506iJ5uLzLPY5xsbK8ELNiTdZfIzahFe2VuX-FDSzSSUzmqUWgHZPCMtjP-1S8K2_NLFewXML8UVaZjraYEkZs8-KuLoWEQMv44umlrjVWM0IfX8wQ5B3VHr11WVjnyXsJw0KThSOOr4waVKUfHuDSCmkX9FJqel-lwioBn0RADSsu4gJyBtOhoRGoU"/>
+<div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+</div>
+</div>
+<div class="flex-1">
+<h3 class="font-body-md text-body-md font-semibold text-on-background">Binaural Beats</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Alpha Waves • 45 Tracks</p>
+</div>
+</div>
+<!-- Playlist Card 3 -->
+<div class="flex items-center gap-4 p-4 glass-panel rounded-xl group active:scale-[0.98] transition-transform">
+<div class="w-16 h-16 rounded-lg overflow-hidden shrink-0 relative">
+<img class="w-full h-full object-cover" data-alt="A stylized macro photography shot of an old vinyl record player, but with a futuristic neon twist. The light glows with a soft 'Tokyo Purple' luminescence against a matte black surface. This represents the blend of classic music appreciation with high-performance digital technology. The mood is sophisticated and intensely focused on the detail of the sound." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEDEmYHK-XFYnHW2On5PsjvNlhJwy2UmYMyAMVjZ188p4hjuKIQSn7jRggIVhArb2xHnih8iFRGVmySbReTeUurzWOIZDaumZRv_323oR6xhrldxfToGaLe1oRp4Fo9NZI-0GootBoMa6qI6ZI94-G9k_wn78jFr-CxC5L4qvz4ArgyB3iU9BFORaquqwfM_aU1TsfW7jdRaWpvx8A3mI2kPq4pe6yfHkf1mX0hVwo6kBh46IV9HC3GcK0KTzhshI7wl-vf2Wn67o"/>
+<div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+</div>
+</div>
+<div class="flex-1">
+<h3 class="font-body-md text-body-md font-semibold text-on-background">Nightly Rituals</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Slow Jazz &amp; Rain • 80 Tracks</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Floating Mini Player -->
+<div class="fixed bottom-20 left-4 right-4 z-40">
+<div class="glass-panel p-3 rounded-2xl flex items-center gap-3 shadow-2xl border-primary/10">
+<div class="w-10 h-10 rounded-lg overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Digital wave art in neon purple and deep black, representing a pulsing audio track. The artwork is vibrant yet dark, centered on the idea of deep focus music. It has a high-quality glassmorphism effect and looks like a futuristic album cover for a lofi hip hop collection." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBArhEMmv7y9f91u2nPlEXeJKr7ccywqNrVYgBcn-LtMB3yvmzEwH479N2p8lLwWU4gjJu_rihfX3BuGaquzWq4dLbm3tqgiHx9jY2cnyqclxmrzMREreqEhb8p0ToXakD08Bm2PKd5M02GOkK--cAqD_Pp_NnzuQudGvF4wTlZmY_oeUzCw6gbKZf3OokhVgFHOXET9hC95pO2zTncRdpo-xVtyTAGdl2O7X_bfeZHJM_px0fDTaUZxTpZuNMuBItiY-1lzLVBPBg"/>
+</div>
+<div class="flex-1 overflow-hidden">
+<h4 class="font-label-md text-label-md font-bold truncate text-on-background">Cyberpunk Dreams</h4>
+<p class="font-label-sm text-[10px] text-on-surface-variant truncate">Night City Lofi</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant">favorite</span>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">pause</span>
+<span class="material-symbols-outlined text-on-surface-variant">close</span>
+</div>
+<div class="absolute bottom-0 left-0 h-0.5 bg-primary/30 w-full rounded-b-2xl overflow-hidden">
+<div class="h-full bg-primary w-2/3 shadow-[0_0_8px_rgba(224,182,255,0.8)]"></div>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 w-full z-50 bg-background/80 backdrop-blur-xl flex justify-around items-center h-16 px-4 border-t border-outline-variant/10 shadow-[0_-4px_20px_rgba(157,78,221,0.1)]">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">library_music</span>
+<span class="font-label-sm text-label-sm">Library</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-label-sm text-label-sm">Explore</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary bg-primary-container/20 rounded-xl px-3 py-1 active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">timer</span>
+<span class="font-label-sm text-label-sm">Pomodoro</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-sm text-label-sm">Settings</span>
+</a>
+</nav>
+<script>
+        // Particle Background Logic
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        const particleCount = 40;
+        const connectionDistance = 150;
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.3;
+                this.vy = (Math.random() - 0.5) * 0.3;
+                this.radius = Math.random() * 2 + 1;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(224, 182, 255, 0.4)';
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            resize();
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach((p, i) => {
+                p.update();
+                p.draw();
+
+                for (let j = i + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
+                    const dx = p.x - p2.x;
+                    const dy = p.y - p2.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < connectionDistance) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        const opacity = 1 - (dist / connectionDistance);
+                        ctx.strokeStyle = `rgba(224, 182, 255, ${opacity * 0.15})`;
+                        ctx.stroke();
+                    }
+                }
+            });
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', resize);
+        init();
+        animate();
+
+        // Simple Micro-interaction for Play/Pause
+        const playBtn = document.getElementById('main-play-btn');
+        let isPlaying = false;
+
+        playBtn.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            const icon = playBtn.querySelector('.material-symbols-outlined');
+            icon.textContent = isPlaying ? 'pause' : 'play_arrow';
+            
+            if(isPlaying) {
+                playBtn.classList.add('scale-110');
+            } else {
+                playBtn.classList.remove('scale-110');
+            }
+        });
+
+        // Dynamic Ring Progress Demo
+        const ring = document.getElementById('progress-ring');
+        let offset = 816;
+        setInterval(() => {
+            if(isPlaying) {
+                offset -= 0.5;
+                if(offset < 0) offset = 816;
+                ring.style.strokeDashoffset = offset;
+            }
+        }, 100);
+    </script>
+</body></html>

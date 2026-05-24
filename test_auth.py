@@ -2,10 +2,10 @@ import pytest
 from httpx import AsyncClient, ASGITransport
 from datetime import timedelta
 
-from main import app
+from src.main import app
 from src.core.security import create_access_token, create_refresh_token, verify_token
 from src.core.settings import settings
-from models import User
+from src.db.models import Base, User
 from test_api import db_session, client, setup_db, override_get_db
 
 @pytest.mark.asyncio

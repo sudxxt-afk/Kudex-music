@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            background-color: #0A0A0A;
+            color: #e5e2e1;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #131313;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #2D2D2D;
+        }
+        .material-symbols-outlined {
+            font-size: 18px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary": "#2f3131",
+                        "secondary-container": "#13ff43",
+                        "on-secondary": "#003907",
+                        "on-surface-variant": "#c4c7c8",
+                        "on-primary-fixed": "#1a1c1c",
+                        "tertiary-fixed-dim": "#adc7ff",
+                        "secondary-fixed": "#72ff70",
+                        "primary-container": "#e2e2e2",
+                        "on-primary-fixed-variant": "#454747",
+                        "on-error": "#690005",
+                        "on-tertiary-fixed": "#001a41",
+                        "surface-container": "#201f1f",
+                        "primary": "#ffffff",
+                        "inverse-surface": "#e5e2e1",
+                        "surface-bright": "#3a3939",
+                        "on-surface": "#e5e2e1",
+                        "surface-tint": "#c6c6c7",
+                        "surface-container-highest": "#353534",
+                        "secondary-fixed-dim": "#00e639",
+                        "background": "#131313",
+                        "primary-fixed-dim": "#c6c6c7",
+                        "on-secondary-fixed-variant": "#00530e",
+                        "inverse-primary": "#5d5f5f",
+                        "primary-fixed": "#e2e2e2",
+                        "surface-container-low": "#1c1b1b",
+                        "on-background": "#e5e2e1",
+                        "on-primary-container": "#636565",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-container": "#007117",
+                        "inverse-on-surface": "#313030",
+                        "surface": "#131313",
+                        "outline": "#8e9192",
+                        "on-secondary-fixed": "#002203",
+                        "error-container": "#93000a",
+                        "on-tertiary-container": "#0061cb",
+                        "surface-variant": "#353534",
+                        "outline-variant": "#444748",
+                        "tertiary-container": "#d8e2ff",
+                        "surface-dim": "#131313",
+                        "secondary": "#ecffe3",
+                        "tertiary-fixed": "#d8e2ff",
+                        "tertiary": "#ffffff",
+                        "on-tertiary": "#002e68",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-tertiary-fixed-variant": "#004493",
+                        "error": "#ffb4ab",
+                        "surface-container-high": "#2a2a2a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "0px"
+                    },
+                    "spacing": {
+                        "density-high": "8px",
+                        "margin-page": "24px",
+                        "gutter": "16px",
+                        "unit": "4px",
+                        "density-medium": "16px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["JetBrains Mono"],
+                        "display-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-xs": ["JetBrains Mono"],
+                        "headline-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "display-lg-mobile": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "400"}],
+                        "label-xs": ["10px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400"}],
+                        "display-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background selection:bg-primary selection:text-on-primary">
+<!-- TopAppBar Section -->
+<header class="fixed top-0 left-0 w-full z-50 bg-background border-b border-outline-variant flex justify-between items-center px-density-medium h-12">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">terminal</span>
+<h1 class="font-label-sm text-label-sm tracking-tighter font-bold text-primary">TERMINAL_AUDIO_V1.0</h1>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary hover:bg-surface-container-highest transition-colors p-1 cursor-pointer">search</span>
+<div class="w-2 h-2 bg-secondary-container animate-pulse"></div>
+</div>
+</header>
+<main class="pt-16 pb-20 px-density-medium max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-0 border-x border-outline-variant min-h-screen">
+<!-- SYSTEM_STAT Panel -->
+<section class="md:col-span-12 border-b border-outline-variant pb-4 mb-6">
+<div class="flex flex-wrap gap-6 items-end">
+<div class="border-l-2 border-primary pl-3">
+<p class="font-label-xs text-outline uppercase tracking-widest mb-1">SYSTEM_STAT</p>
+<div class="flex gap-8">
+<div>
+<span class="font-label-xs text-outline">TOTAL_TRACKS</span>
+<p class="font-label-sm text-primary">4,021</p>
+</div>
+<div>
+<span class="font-label-xs text-outline">DISK_USAGE</span>
+<p class="font-label-sm text-primary">42.8 GB</p>
+</div>
+<div>
+<span class="font-label-xs text-outline">CACHE_STATE</span>
+<p class="font-label-sm text-secondary-container">ACTIVE</p>
+</div>
+<div>
+<span class="font-label-xs text-outline">UPTIME</span>
+<p class="font-label-sm text-primary mono">124:14:02</p>
+</div>
+</div>
+</div>
+<div class="ml-auto hidden md:block">
+<div class="flex gap-1 h-8 items-end">
+<div class="bg-outline-variant w-1 h-2"></div>
+<div class="bg-outline-variant w-1 h-4"></div>
+<div class="bg-primary w-1 h-6"></div>
+<div class="bg-primary w-1 h-5"></div>
+<div class="bg-primary w-1 h-8"></div>
+<div class="bg-outline-variant w-1 h-3"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Content Area -->
+<div class="md:col-span-8 md:border-r border-outline-variant pr-0 md:pr-4">
+<header class="flex justify-between items-center mb-4">
+<h2 class="font-label-sm text-primary tracking-widest uppercase flex items-center gap-2">
+<span class="w-2 h-4 bg-primary"></span>
+                    SAVED_PROTOCOLS
+                </h2>
+<span class="font-label-xs text-outline">LISTING_ALL_OBJECTS</span>
+</header>
+<!-- Data Table -->
+<div class="overflow-x-auto border border-outline-variant">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low border-b border-outline-variant">
+<tr class="font-label-xs text-outline">
+<th class="px-4 py-2 border-r border-outline-variant font-medium">ID</th>
+<th class="px-4 py-2 border-r border-outline-variant font-medium">TRACK_NAME</th>
+<th class="px-4 py-2 border-r border-outline-variant font-medium">ARTIST</th>
+<th class="px-4 py-2 font-medium">DUR</th>
+</tr>
+</thead>
+<tbody class="font-label-sm text-primary mono">
+<tr class="hover:bg-surface-container-highest transition-colors border-b border-outline-variant cursor-pointer group">
+<td class="px-4 py-2 border-r border-outline-variant text-outline">001</td>
+<td class="px-4 py-2 border-r border-outline-variant group-hover:text-secondary-container">NEURAL_DAMPENING.WAV</td>
+<td class="px-4 py-2 border-r border-outline-variant">VOID_ENGINEER</td>
+<td class="px-4 py-2">04:12</td>
+</tr>
+<tr class="hover:bg-surface-container-highest transition-colors border-b border-outline-variant cursor-pointer group">
+<td class="px-4 py-2 border-r border-outline-variant text-outline">002</td>
+<td class="px-4 py-2 border-r border-outline-variant group-hover:text-secondary-container">SYNTHETIC_AWARENESS</td>
+<td class="px-4 py-2 border-r border-outline-variant">CORE_PROCESSOR</td>
+<td class="px-4 py-2">03:55</td>
+</tr>
+<tr class="hover:bg-surface-container-highest transition-colors border-b border-outline-variant cursor-pointer group">
+<td class="px-4 py-2 border-r border-outline-variant text-outline">003</td>
+<td class="px-4 py-2 border-r border-outline-variant group-hover:text-secondary-container">DATA_STREAM_ALPHA</td>
+<td class="px-4 py-2 border-r border-outline-variant">ROOT_ADMIN</td>
+<td class="px-4 py-2">06:21</td>
+</tr>
+<tr class="hover:bg-surface-container-highest transition-colors border-b border-outline-variant cursor-pointer group">
+<td class="px-4 py-2 border-r border-outline-variant text-outline">004</td>
+<td class="px-4 py-2 border-r border-outline-variant group-hover:text-secondary-container">BINARY_ECHO_V4</td>
+<td class="px-4 py-2 border-r border-outline-variant">LOGIC_GATE</td>
+<td class="px-4 py-2">02:44</td>
+</tr>
+<tr class="hover:bg-surface-container-highest transition-colors border-b border-outline-variant cursor-pointer group">
+<td class="px-4 py-2 border-r border-outline-variant text-outline">005</td>
+<td class="px-4 py-2 border-r border-outline-variant group-hover:text-secondary-container">SILICON_DREAM</td>
+<td class="px-4 py-2 border-r border-outline-variant">VOID_ENGINEER</td>
+<td class="px-4 py-2">05:10</td>
+</tr>
+<tr class="hover:bg-surface-container-highest transition-colors border-b border-outline-variant cursor-pointer group">
+<td class="px-4 py-2 border-r border-outline-variant text-outline">006</td>
+<td class="px-4 py-2 border-r border-outline-variant group-hover:text-secondary-container">CACHE_EXPIRED</td>
+<td class="px-4 py-2 border-r border-outline-variant">NULL_PTR</td>
+<td class="px-4 py-2">01:03</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mt-4 flex justify-between items-center font-label-xs text-outline">
+<span>EOF_REACHED</span>
+<div class="flex gap-2">
+<button class="px-3 py-1 border border-outline-variant hover:border-primary transition-colors">PREV</button>
+<button class="px-3 py-1 border border-outline-variant hover:border-primary transition-colors">NEXT</button>
+</div>
+</div>
+</div>
+<!-- Sidebar / NODE_COLLECTIONS -->
+<aside class="md:col-span-4 pl-0 md:pl-4 mt-8 md:mt-0">
+<header class="mb-4">
+<h2 class="font-label-sm text-primary tracking-widest uppercase">NODE_COLLECTIONS</h2>
+</header>
+<div class="flex flex-col gap-px bg-outline-variant border border-outline-variant">
+<div class="bg-background p-4 flex items-center justify-between hover:bg-surface-container-low transition-colors cursor-pointer group border-l-2 border-primary">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline group-hover:text-primary">folder_open</span>
+<div>
+<p class="font-label-sm text-primary">FAVORITES.BIN</p>
+<p class="font-label-xs text-outline">128_OBJECTS</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</div>
+<div class="bg-background p-4 flex items-center justify-between hover:bg-surface-container-low transition-colors cursor-pointer group border-l-2 border-transparent">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline group-hover:text-primary">folder</span>
+<div>
+<p class="font-label-sm text-primary">AMBIENT_WORK.SYS</p>
+<p class="font-label-xs text-outline">42_OBJECTS</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</div>
+<div class="bg-background p-4 flex items-center justify-between hover:bg-surface-container-low transition-colors cursor-pointer group border-l-2 border-transparent">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline group-hover:text-primary">folder</span>
+<div>
+<p class="font-label-sm text-primary">CODE_SESSIONS.LOG</p>
+<p class="font-label-xs text-outline">12_OBJECTS</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</div>
+<div class="bg-background p-4 flex items-center justify-between hover:bg-surface-container-low transition-colors cursor-pointer group border-l-2 border-transparent">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline group-hover:text-primary">folder</span>
+<div>
+<p class="font-label-sm text-primary">LATE_NIGHT_PROC</p>
+<p class="font-label-xs text-outline">89_OBJECTS</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</div>
+<button class="bg-background p-3 text-center font-label-xs text-outline hover:text-primary hover:bg-surface-container-low transition-colors uppercase tracking-widest border-t border-outline-variant">
+                    + INITIALIZE_NEW_COLLECTION
+                </button>
+</div>
+<!-- Mini Visualizer / Aesthetic element -->
+<div class="mt-8 border border-outline-variant p-4">
+<p class="font-label-xs text-outline mb-4">LIVE_OUTPUT_STREAM</p>
+<div class="h-32 bg-surface-container-lowest relative overflow-hidden flex items-end justify-between px-1">
+<div class="w-2 bg-primary h-12"></div>
+<div class="w-2 bg-primary h-24 animate-[bounce_1.5s_infinite]"></div>
+<div class="w-2 bg-primary h-16 animate-[bounce_2s_infinite]"></div>
+<div class="w-2 bg-primary h-20 animate-[bounce_1.2s_infinite]"></div>
+<div class="w-2 bg-primary h-28 animate-[bounce_1.8s_infinite]"></div>
+<div class="w-2 bg-primary h-10 animate-[bounce_2.2s_infinite]"></div>
+<div class="w-2 bg-primary h-14 animate-[bounce_1.4s_infinite]"></div>
+<div class="w-2 bg-primary h-22 animate-[bounce_1.6s_infinite]"></div>
+<div class="w-2 bg-primary h-18 animate-[bounce_1.1s_infinite]"></div>
+<div class="w-2 bg-primary h-26 animate-[bounce_1.9s_infinite]"></div>
+<!-- CSS for simple animation in lieu of JS where possible -->
+<style>
+                        @keyframes bounce {
+                            0%, 100% { height: 10%; }
+                            50% { height: 80%; }
+                        }
+                    </style>
+</div>
+</div>
+</aside>
+</main>
+<!-- BottomNavBar Section -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-14 bg-background border-t border-outline-variant">
+<a class="flex flex-col items-center justify-center text-outline pt-1 hover:text-primary hover:bg-surface-container-low w-full h-full transition-colors" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-xs uppercase tracking-widest mt-1">ROOT</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline pt-1 hover:text-primary hover:bg-surface-container-low w-full h-full transition-colors" href="#">
+<span class="material-symbols-outlined">search</span>
+<span class="font-label-xs uppercase tracking-widest mt-1">QUERY</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary border-t-2 border-primary pt-1 bg-surface-container-low w-full h-full" href="#">
+<span class="material-symbols-outlined">library_music</span>
+<span class="font-label-xs uppercase tracking-widest mt-1">LIBS</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline pt-1 hover:text-primary hover:bg-surface-container-low w-full h-full transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-xs uppercase tracking-widest mt-1">CONF</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for table rows
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('click', () => {
+                // Flash effect
+                row.classList.add('bg-white');
+                setTimeout(() => {
+                    row.classList.remove('bg-white');
+                }, 50);
+                console.log('Mounting object: ' + row.querySelector('td:nth-child(2)').innerText);
+            });
+        });
+
+        // Simple terminal-style text output animation
+        const statusText = document.querySelector('span[class*="text-outline"]:contains("LISTING_ALL_OBJECTS")');
+        if (statusText) {
+            let dots = 0;
+            setInterval(() => {
+                dots = (dots + 1) % 4;
+                statusText.innerText = 'LISTING_ALL_OBJECTS' + '.'.repeat(dots);
+            }, 500);
+        }
+    </script>
+</body></html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kudex Music | Sync'd</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary": "#ecffe3",
+                    "on-tertiary-fixed-variant": "#5e4100",
+                    "surface": "#131314",
+                    "surface-variant": "#353436",
+                    "tertiary-container": "#9a6d00",
+                    "surface-container-low": "#1c1b1c",
+                    "secondary-fixed": "#72ff70",
+                    "on-background": "#e5e2e3",
+                    "background": "#131314",
+                    "surface-container-high": "#2a2a2b",
+                    "surface-bright": "#3a393a",
+                    "outline-variant": "#4d4353",
+                    "secondary-fixed-dim": "#00e639",
+                    "on-primary": "#4c007d",
+                    "primary-fixed": "#f2daff",
+                    "primary-container": "#9d4edd",
+                    "on-primary-container": "#fffdff",
+                    "tertiary-fixed-dim": "#ffba27",
+                    "on-tertiary-fixed": "#271900",
+                    "on-secondary-container": "#007117",
+                    "inverse-primary": "#8433c4",
+                    "on-error": "#690005",
+                    "tertiary": "#ffba27",
+                    "primary-fixed-dim": "#e0b6ff",
+                    "surface-dim": "#131314",
+                    "inverse-on-surface": "#313031",
+                    "error-container": "#93000a",
+                    "on-error-container": "#ffdad6",
+                    "surface-container-lowest": "#0e0e0f",
+                    "on-surface": "#e5e2e3",
+                    "on-secondary-fixed-variant": "#00530e",
+                    "outline": "#998d9e",
+                    "on-tertiary-container": "#fffdff",
+                    "inverse-surface": "#e5e2e3",
+                    "on-tertiary": "#422c00",
+                    "on-surface-variant": "#d0c2d5",
+                    "tertiary-fixed": "#ffdea9",
+                    "surface-container": "#201f20",
+                    "error": "#ffb4ab",
+                    "surface-tint": "#e0b6ff",
+                    "on-primary-fixed-variant": "#6a0baa",
+                    "surface-container-highest": "#353436",
+                    "on-secondary-fixed": "#002203",
+                    "primary": "#e0b6ff",
+                    "on-primary-fixed": "#2e004e",
+                    "secondary-container": "#13ff43",
+                    "on-secondary": "#003907"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "section-gap": "48px",
+                    "gutter": "24px",
+                    "sidebar-width": "280px",
+                    "margin-page": "32px",
+                    "stack-gap": "16px",
+                    "player-height": "96px"
+            },
+            "fontFamily": {
+                    "label-md": ["Geist"],
+                    "headline-sm": ["Inter"],
+                    "display-lg-mobile": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-sm": ["Geist"],
+                    "body-md": ["Inter"],
+                    "display-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-sm": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "1.1", "fontWeight": "800"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-md": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #0A0A0B;
+            overflow: hidden;
+        }
+        .neon-orb {
+            position: absolute;
+            filter: blur(120px);
+            opacity: 0.4;
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .orb-purple {
+            width: 500px;
+            height: 500px;
+            background: #9d4edd;
+            top: -100px;
+            right: -100px;
+            animation: float 20s infinite alternate ease-in-out;
+        }
+        .orb-amber {
+            width: 400px;
+            height: 400px;
+            background: #ffba27;
+            bottom: -50px;
+            left: -50px;
+            animation: float 25s infinite alternate-reverse ease-in-out;
+        }
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(40px, 80px); }
+        }
+        .glass-card {
+            background: rgba(19, 19, 20, 0.7);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 40px rgba(157, 78, 221, 0.1);
+        }
+        .logo-glow {
+            text-shadow: 0 0 20px rgba(224, 182, 255, 0.5);
+        }
+        .btn-gradient {
+            background: linear-gradient(135deg, #9d4edd 0%, #3a0ca3 100%);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-gradient:hover {
+            box-shadow: 0 0 25px rgba(157, 78, 221, 0.4);
+            transform: translateY(-1px);
+        }
+        .btn-gradient:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-surface flex items-center justify-center min-h-screen">
+<!-- Ambient Background -->
+<div class="neon-orb orb-purple"></div>
+<div class="neon-orb orb-amber"></div>
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#0A0A0B_100%)] z-0"></div>
+<!-- Main Content Canvas -->
+<main class="relative z-10 w-full max-w-[440px] px-gutter">
+<!-- Login Card -->
+<div class="glass-card rounded-xl p-10 flex flex-col items-center text-center">
+<!-- Branding -->
+<div class="mb-8">
+<div class="flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-primary text-[48px] logo-glow" data-icon="music_cast">music_cast</span>
+</div>
+<h1 class="font-display-lg-mobile text-display-lg-mobile md:font-display-lg md:text-display-lg tracking-tighter text-on-surface">
+                    KUDEX
+                </h1>
+<p class="font-label-md text-on-surface-variant uppercase tracking-[0.2em] mt-2">
+                    Your Music, Sync'd
+                </p>
+</div>
+<!-- Login Section -->
+<div class="w-full space-y-6">
+<p class="font-body-md text-on-surface-variant px-4">
+                    Experience seamless audio across all your devices with high-fidelity streaming.
+                </p>
+<button class="btn-gradient w-full flex items-center justify-center gap-3 py-4 rounded-lg font-label-md text-on-primary-container shadow-xl">
+<svg fill="none" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM16.64 8.8C16.49 10.38 15.84 14.19 15.51 15.96C15.37 16.71 15.09 16.96 14.82 16.99C14.24 17.04 13.8 16.6 13.23 16.23C12.35 15.65 11.85 15.29 11 14.73C10.02 14.08 10.65 13.72 11.21 13.14C11.36 12.99 13.92 10.66 13.97 10.45C13.98 10.42 13.98 10.32 13.92 10.27C13.86 10.22 13.77 10.24 13.71 10.25C13.62 10.27 12.27 11.16 9.66 12.92C9.28 13.18 8.93 13.31 8.62 13.3C8.27 13.29 7.61 13.11 7.11 12.94C6.5 12.75 6.02 12.64 6.06 12.3C6.08 12.13 6.32 11.95 6.77 11.77C9.57 10.55 11.45 9.75 12.41 9.35C15.13 8.21 15.7 8.01 16.07 8.01C16.15 8.01 16.33 8.03 16.45 8.13C16.55 8.21 16.58 8.32 16.59 8.4C16.6 8.47 16.65 8.64 16.64 8.8Z" fill="white"></path>
+</svg>
+                    Log in with Telegram
+                </button>
+<div class="flex items-center gap-4 py-2">
+<div class="h-[1px] flex-1 bg-white/10"></div>
+<span class="font-label-sm text-on-surface-variant">OR</span>
+<div class="h-[1px] flex-1 bg-white/10"></div>
+</div>
+<div class="grid gap-4 grid-cols-1">
+<button class="flex items-center justify-center gap-2 py-3 border border-white/5 rounded-lg font-label-sm text-on-surface hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="qr_code_scanner">qr_code_scanner</span>
+                        QR Code
+                    </button>
+</div>
+</div>
+<!-- Footer Links -->
+<div class="mt-10 flex flex-col gap-4">
+<a class="font-label-sm text-primary hover:text-primary-fixed-dim transition-colors" href="#">
+                    Create a Kudex Account
+                </a>
+<p class="font-label-sm text-on-surface-variant opacity-60">
+                    By continuing, you agree to Kudex’s <br/>
+<span class="underline cursor-pointer">Terms of Service</span> and <span class="underline cursor-pointer">Privacy Policy</span>.
+                </p>
+</div>
+</div>
+<!-- App Store Badges (Optional / Contextual) -->
+<div class="mt-8 flex justify-center gap-6 opacity-40 hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined cursor-pointer hover:text-primary" data-icon="phone_iphone">phone_iphone</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-primary" data-icon="laptop_mac">laptop_mac</span>
+</div>
+</main>
+<!-- Visual Atmosphere: Interactive Cursor Light -->
+<div class="fixed w-[600px] h-[600px] bg-primary/5 rounded-full blur-[100px] pointer-events-none z-0 transform -translate-x-1/2 -translate-y-1/2 transition-opacity duration-1000 opacity-0" id="cursor-glow"></div>
+<script>
+        // Atmospheric interaction
+        const glow = document.getElementById('cursor-glow');
+        document.addEventListener('mousemove', (e) => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+            glow.style.opacity = '1';
+        });
+
+        // Simple enter animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const card = document.querySelector('.glass-card');
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                card.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 100);
+        });
+    </script>
+</body></html>

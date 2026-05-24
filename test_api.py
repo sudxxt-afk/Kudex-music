@@ -5,8 +5,9 @@ from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, Asyn
 from sqlalchemy.pool import StaticPool
 from sqlalchemy.exc import OperationalError
 
-from main import app, get_db
-from models import Base, User
+from src.main import app
+from src.db.database import get_db
+from src.db.models import Base, User
 from src.core.security import verify_token
 
 TEST_DATABASE_URL = "sqlite+aiosqlite:///:memory:"

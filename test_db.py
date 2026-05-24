@@ -5,8 +5,8 @@ from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, Asyn
 from sqlalchemy.orm import selectinload
 from sqlalchemy.pool import StaticPool
 
-from models import Base, User, Playlist
-from database import logger
+from src.db.models import Base, User, Playlist
+from src.db.database import logger
 
 TEST_DATABASE_URL = "sqlite+aiosqlite:///:memory:"
 
@@ -41,7 +41,7 @@ async def db_session(test_engine) -> AsyncSession:
 @pytest.mark.asyncio
 async def test_create_user_and_playlist(db_session: AsyncSession, mocker) -> None:
     # Мокаем логирование для проверки работы логгера
-    mock_logger_info = mocker.patch("database.logger.info")
+    mock_logger_info = mocker.patch("src.db.database.logger.info")
 
     # Имитируем успешное подключение (для теста работы логгера)
     logger.info("Successfully connected to the database.")

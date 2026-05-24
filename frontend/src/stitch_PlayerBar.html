@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#45464e",
+                        "tertiary-container": "#e3e1ea",
+                        "surface": "#131315",
+                        "primary-container": "#e2e2e2",
+                        "on-tertiary-fixed-variant": "#46464d",
+                        "on-primary-fixed-variant": "#454747",
+                        "inverse-surface": "#e5e1e4",
+                        "outline": "#8e9192",
+                        "on-background": "#e5e1e4",
+                        "secondary-container": "#45464e",
+                        "on-error": "#690005",
+                        "on-tertiary-container": "#64646b",
+                        "error-container": "#93000a",
+                        "on-surface": "#e5e1e4",
+                        "surface-container-highest": "#353437",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-high": "#2a2a2c",
+                        "tertiary-fixed": "#e3e1ea",
+                        "background": "#131315",
+                        "surface-variant": "#353437",
+                        "surface-tint": "#c6c6c7",
+                        "secondary-fixed-dim": "#c6c6cf",
+                        "primary": "#ffffff",
+                        "error": "#ffb4ab",
+                        "primary-fixed": "#e2e2e2",
+                        "inverse-on-surface": "#313032",
+                        "on-primary-fixed": "#1a1c1c",
+                        "on-secondary-fixed": "#1a1b22",
+                        "on-secondary-container": "#b4b4bd",
+                        "outline-variant": "#444748",
+                        "on-tertiary": "#303037",
+                        "on-surface-variant": "#c4c7c8",
+                        "surface-container": "#201f22",
+                        "on-primary": "#2f3131",
+                        "secondary-fixed": "#e2e1eb",
+                        "surface-container-lowest": "#0e0e10",
+                        "tertiary-fixed-dim": "#c7c5ce",
+                        "tertiary": "#ffffff",
+                        "on-primary-container": "#636565",
+                        "inverse-primary": "#5d5f5f",
+                        "surface-container-low": "#1c1b1d",
+                        "secondary": "#c6c6cf",
+                        "primary-fixed-dim": "#c6c6c7",
+                        "on-tertiary-fixed": "#1b1b21",
+                        "surface-bright": "#39393b",
+                        "on-secondary": "#2f3037",
+                        "surface-dim": "#131315"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "0px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "margin-desktop": "32px",
+                        "container-max": "1440px",
+                        "unit": "4px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "mono-label": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-xl": ["Inter"],
+                        "label-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", {"lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400"}],
+                        "mono-label": ["11px", {"lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "headline-md": ["20px", {"lineHeight": "1.4", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-xl": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #09090B;
+            color: #E5E1E4;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            font-size: 20px;
+        }
+        .progress-bar-fill {
+            transition: width 0.3s ease;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-body-md">
+<!-- Main Content Canvas (Mobile View Mockup) -->
+<main class="min-h-screen pb-[120px] px-margin-mobile pt-8">
+<div class="mb-8">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tighter mb-2">SONIC.ARCH</h1>
+<p class="text-on-surface-variant font-mono-label text-mono-label uppercase tracking-widest">Architectural Audio System // v1.0.4</p>
+</div>
+<!-- Featured Section -->
+<div class="border border-outline-variant bg-surface-container-low mb-8">
+<div class="aspect-square w-full relative border-b border-outline-variant">
+<img alt="Album Art" class="w-full h-full object-cover grayscale opacity-80" data-alt="A highly detailed architectural minimalist photograph of a Brutalist concrete structure at dusk. The building features sharp 90-degree angles and deep shadows, illuminated by a single thin strip of cold white LED light. The overall mood is intense, serious, and sophisticated, dominated by dark charcoal and slate gray tones. The atmosphere is quiet and precise, reflecting high-end professional music engineering." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmQfqU4mhwkVRayORvBRg-uUnajHSZSedlmzzDBINYEF4Us3m210rmvUd0VQRdbbQm5pqB0QqzAH9DIwf4-31EdN2tfsEzt69RV4Xa8upWwDM0Xmq6QVtgPG3WQCtprD0_k9ButHoAnJ4EpXbfJlfV-n0si0WIteoKNaOyP7rcPyDRah5gmYkuOgKMRBR9QLDzALAsT1yq2zZggwQhY0nHtmC6oT7cobLMBiSJWkhgAc--6NKywSBcApzPAU2smS91KFOPjBjcUMZB"/>
+</div>
+<div class="p-6">
+<span class="font-mono-label text-mono-label text-outline uppercase">Now Playing</span>
+<h2 class="font-headline-md text-headline-md text-primary mt-2">Cosmic Resonance</h2>
+<p class="text-on-surface-variant">Etheric Horizons</p>
+</div>
+</div>
+<!-- Track List Mockup -->
+<div class="space-y-0 border-t border-outline-variant">
+<div class="flex items-center justify-between py-4 border-b border-outline-variant hover:bg-surface-container-high transition-colors px-2">
+<div class="flex gap-4 items-center">
+<span class="font-mono-label text-mono-label text-outline w-6">01</span>
+<span class="font-body-md text-body-md">Void Protocol</span>
+</div>
+<span class="font-mono-label text-mono-label text-on-surface-variant">04:22</span>
+</div>
+<div class="flex items-center justify-between py-4 border-b border-outline-variant hover:bg-surface-container-high transition-colors px-2">
+<div class="flex gap-4 items-center">
+<span class="font-mono-label text-mono-label text-outline w-6">02</span>
+<span class="font-body-md text-body-md text-primary">Cosmic Resonance</span>
+</div>
+<span class="material-symbols-outlined text-primary">equalizer</span>
+</div>
+<div class="flex items-center justify-between py-4 border-b border-outline-variant hover:bg-surface-container-high transition-colors px-2">
+<div class="flex gap-4 items-center">
+<span class="font-mono-label text-mono-label text-outline w-6">03</span>
+<span class="font-body-md text-body-md">Static Equilibrium</span>
+</div>
+<span class="font-mono-label text-mono-label text-on-surface-variant">05:11</span>
+</div>
+</div>
+</main>
+<!-- FIXED BOTTOM PLAYER BAR -->
+<div class="fixed bottom-0 left-0 w-full z-50 bg-surface border-t border-outline-variant flex flex-col">
+<!-- Center/Top: Edge-to-Edge Progress Bar -->
+<div class="w-full h-[2px] bg-surface-container-highest">
+<div class="h-full bg-primary progress-bar-fill" style="width: 45%;"></div>
+</div>
+<!-- Main Player UI -->
+<div class="flex items-center justify-between h-[80px] px-4">
+<!-- Left: Album Metadata -->
+<div class="flex items-center gap-3 w-1/3 min-w-0">
+<div class="w-12 h-12 bg-surface-container-highest border border-outline-variant flex-shrink-0">
+<img alt="Thumbnail" class="w-full h-full object-cover grayscale" data-alt="A small square thumbnail of an abstract minimalist architectural structure. The image is highly desaturated, almost monochromatic, with sharp geometric lines and high contrast shadows. The aesthetic is industrial and professional, fitting into a high-end dark-themed music player interface. The lighting is focused and surgical." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSqD3Zy9GknucPcHz9al3nGrM1xtRp9vRnk64K_up9855PnJeMKLAXYvjFXVRxJoXjdLBDDVrYgyRUpaWcb6Hg8fRP1fMtd2pjx4pm5aPq6VM3VDKrx7CI-qnU1v9EUQuz0zzA1JiXsE-yxuffOzlnSYpf74lXLoggKZIWtgsOWyFsezDmvgRS6m5PSxieW9enkaR72IqLN8uNmlOiZq_hU72rwRWuLkznTb4WY7MyipR0QJ0YjelKTEN5dlxUL4LlblS-y7CpAr2g"/>
+</div>
+<div class="flex flex-col min-w-0 overflow-hidden">
+<span class="font-label-sm text-label-sm text-primary truncate">Cosmic Resonance</span>
+<span class="font-mono-label text-mono-label text-on-surface-variant truncate uppercase tracking-wider">Etheric Horizons</span>
+</div>
+</div>
+<!-- Center: Playback Controls -->
+<div class="flex items-center justify-center gap-8 w-1/3">
+<button class="text-on-surface hover:text-primary transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined">skip_previous</span>
+</button>
+<button class="text-primary hover:scale-105 transition-transform flex items-center justify-center">
+<!-- Square/Minimalist Play Toggle -->
+<span class="material-symbols-outlined !text-[32px]">pause</span>
+</button>
+<button class="text-on-surface hover:text-primary transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined">skip_next</span>
+</button>
+</div>
+<!-- Right: Pomodoro/Status -->
+<div class="flex items-center justify-end gap-2 w-1/3">
+<div class="flex items-center gap-2 border border-outline-variant px-3 py-1 bg-surface-container-low">
+<span class="material-symbols-outlined !text-[14px] text-outline">timer</span>
+<span class="font-mono-label text-mono-label text-primary tracking-widest">25:00</span>
+</div>
+</div>
+</div>
+<!-- Safe Area Spacer for Modern Mobile OS -->
+<div class="h-6 bg-surface"></div>
+</div>
+<!-- Micro-interaction Script -->
+<script>
+        // Simple progress bar animation simulation
+        let progress = 45;
+        const bar = document.querySelector('.progress-bar-fill');
+        
+        setInterval(() => {
+            if (progress < 100) {
+                progress += 0.05;
+                bar.style.width = progress + '%';
+            } else {
+                progress = 0;
+            }
+        }, 1000);
+
+        // Active state toggles for buttons
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mousedown', () => {
+                btn.style.opacity = '0.7';
+            });
+            btn.addEventListener('mouseup', () => {
+                btn.style.opacity = '1';
+            });
+        });
+    </script>
+</body></html>

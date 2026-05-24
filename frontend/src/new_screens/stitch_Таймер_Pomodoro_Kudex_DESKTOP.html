@@ -1,0 +1,388 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Melodix | Focus Timer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Geist:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glow-effect:hover {
+            box-shadow: 0 0 20px rgba(157, 78, 221, 0.4);
+        }
+        .timer-ring {
+            transition: stroke-dashoffset 1s linear;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+        .glass-panel {
+            background: rgba(18, 18, 20, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0px) translateX(0px); }
+            50% { transform: translateY(-20px) translateX(10px); }
+        }
+        .bg-animate {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        .floating-blob {
+            position: absolute;
+            background: radial-gradient(circle, rgba(157, 78, 221, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(60px);
+            animation: float-slow 15s infinite ease-in-out;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#6a0baa",
+                        "surface-dim": "#131314",
+                        "outline": "#998d9e",
+                        "secondary": "#ecffe3",
+                        "primary": "#e0b6ff",
+                        "surface-container-high": "#2a2a2b",
+                        "on-background": "#e5e2e3",
+                        "on-secondary-fixed-variant": "#00530e",
+                        "inverse-surface": "#e5e2e3",
+                        "on-secondary-container": "#007117",
+                        "error-container": "#93000a",
+                        "secondary-container": "#13ff43",
+                        "on-secondary-fixed": "#002203",
+                        "on-primary": "#4c007d",
+                        "secondary-fixed": "#72ff70",
+                        "background": "#131314",
+                        "on-tertiary-fixed-variant": "#5e4100",
+                        "surface-container-highest": "#353436",
+                        "surface": "#131314",
+                        "secondary-fixed-dim": "#00e639",
+                        "primary-container": "#9d4edd",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-low": "#1c1b1c",
+                        "surface-variant": "#353436",
+                        "on-surface": "#e5e2e3",
+                        "on-primary-container": "#fffdff",
+                        "inverse-primary": "#8433c4",
+                        "tertiary-fixed": "#ffdea9",
+                        "on-error": "#690005",
+                        "surface-tint": "#e0b6ff",
+                        "outline-variant": "#4d4353",
+                        "tertiary-fixed-dim": "#ffba27",
+                        "inverse-on-surface": "#313031",
+                        "primary-fixed": "#f2daff",
+                        "tertiary": "#ffba27",
+                        "surface-container-lowest": "#0e0e0f",
+                        "on-tertiary-container": "#fffdff",
+                        "on-primary-fixed": "#2e004e",
+                        "surface-bright": "#3a393a",
+                        "on-tertiary-fixed": "#271900",
+                        "on-secondary": "#003907",
+                        "tertiary-container": "#9a6d00",
+                        "surface-container": "#201f20",
+                        "error": "#ffb4ab",
+                        "on-surface-variant": "#d0c2d5",
+                        "primary-fixed-dim": "#e0b6ff",
+                        "on-tertiary": "#422c00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "stack-gap": "16px",
+                        "sidebar-width": "280px",
+                        "section-gap": "48px",
+                        "player-height": "96px",
+                        "margin-page": "32px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Geist"],
+                        "headline-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["Geist"],
+                        "display-lg-mobile": ["Inter"],
+                        "body-md": ["Inter"],
+                        "display-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "headline-sm": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "headline-md": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                        "display-lg-mobile": ["32px", {"lineHeight": "1.1", "fontWeight": "800"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface overflow-hidden">
+<!-- Background Atmospheric Layer -->
+<div class="bg-animate">
+<div class="floating-blob w-[600px] h-[600px] -top-20 -left-20"></div>
+<div class="floating-blob w-[500px] h-[500px] bottom-0 right-0" style="animation-delay: -5s;"></div>
+</div>
+<!-- Top Navigation (Shell) -->
+<nav class="fixed top-0 right-0 w-[calc(100%-280px)] h-16 flex items-center justify-between px-gutter z-30 bg-surface/80 backdrop-blur-xl">
+<div class="flex items-center gap-4">
+<span class="font-display-lg text-headline-sm font-black text-primary">Melodix</span>
+<div class="h-6 w-px bg-white/10 mx-2"></div>
+<span class="font-label-md text-label-md text-on-surface-variant">Focus Timer</span>
+</div>
+<div class="flex items-center gap-gutter">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer transition-colors" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer transition-colors" data-icon="account_circle">account_circle</span>
+</div>
+</div>
+</nav>
+<!-- Side Navigation (Shell) -->
+<aside class="fixed left-0 top-0 h-full w-sidebar-width flex flex-col py-margin-page z-40 bg-surface-container border-r border-white/5">
+<div class="px-6 mb-12">
+<h1 class="font-display-lg text-display-lg font-black text-primary leading-none">Melodix</h1>
+<p class="font-label-md text-label-md text-on-surface-variant mt-2 uppercase tracking-widest">Premium Audio</p>
+</div>
+<nav class="flex-1 px-2 space-y-2">
+<a class="flex items-center py-3 px-5 text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined mr-4 group-hover:text-primary" data-icon="search">search</span>
+<span class="font-label-md text-label-md">Search</span>
+</a>
+<a class="flex items-center py-3 px-5 text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined mr-4 group-hover:text-primary" data-icon="library_music">library_music</span>
+<span class="font-label-md text-label-md">Media Library</span>
+</a>
+<a class="flex items-center py-3 px-5 text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined mr-4 group-hover:text-primary" data-icon="playlist_play">playlist_play</span>
+<span class="font-label-md text-label-md">Playlists</span>
+</a>
+<a class="flex items-center py-3 px-5 text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined mr-4 group-hover:text-primary" data-icon="favorite">favorite</span>
+<span class="font-label-md text-label-md">Liked Songs</span>
+</a>
+<div class="pt-8 px-5">
+<button class="w-full bg-primary-container text-on-primary-container font-label-md text-label-md py-3 rounded-xl hover:opacity-90 active:scale-95 transition-all">
+                    New Playlist
+                </button>
+</div>
+</nav>
+<div class="px-2 mt-auto">
+<a class="flex items-center py-3 px-5 text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-[280px] mt-16 mb-[96px] h-[calc(100vh-160px)] overflow-y-auto px-margin-page pb-12">
+<div class="max-w-4xl mx-auto flex flex-col items-center justify-center min-h-full py-12">
+<!-- Timer Section -->
+<div class="relative flex flex-col items-center justify-center mb-section-gap">
+<p class="font-label-sm text-label-sm text-primary uppercase tracking-[0.2em] mb-6">Focus Session</p>
+<!-- Circular Timer -->
+<div class="relative w-80 h-80 flex items-center justify-center">
+<svg class="absolute inset-0 w-full h-full -rotate-90">
+<circle class="text-surface-container-highest" cx="160" cy="160" fill="transparent" r="150" stroke="currentColor" stroke-width="8"></circle>
+<circle class="timer-ring" cx="160" cy="160" fill="transparent" id="progress-circle" r="150" stroke="url(#timer-gradient)" stroke-dasharray="942" stroke-dashoffset="0" stroke-linecap="round" stroke-width="12"></circle>
+<defs>
+<linearGradient id="timer-gradient" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#e0b6ff"></stop>
+<stop offset="100%" stop-color="#9d4edd"></stop>
+</linearGradient>
+</defs>
+</svg>
+<!-- Glow effect container -->
+<div class="absolute inset-0 rounded-full shadow-[0_0_50px_rgba(157,78,221,0.15)] -z-10"></div>
+<div class="text-center">
+<h2 class="font-display-lg text-[84px] font-extrabold tracking-tighter text-on-surface" id="timer-display">25:00</h2>
+<div class="flex gap-4 justify-center mt-4">
+<button class="w-14 h-14 bg-primary text-on-primary rounded-full flex items-center justify-center hover:scale-105 active:scale-95 transition-transform shadow-lg shadow-primary/20" id="toggle-timer">
+<span class="material-symbols-outlined text-3xl" data-icon="play_arrow">play_arrow</span>
+</button>
+<button class="w-14 h-14 bg-surface-container-high border border-white/5 text-on-surface rounded-full flex items-center justify-center hover:bg-surface-bright active:scale-95 transition-all" id="reset-timer">
+<span class="material-symbols-outlined text-2xl" data-icon="replay">replay</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Presets -->
+<div class="flex gap-3 mt-12">
+<button class="px-6 py-2 rounded-full border border-white/10 hover:border-primary/50 hover:bg-primary/5 transition-all text-label-md font-label-md" onclick="setTimer(25)">25 min</button>
+<button class="px-6 py-2 rounded-full border border-white/10 hover:border-primary/50 hover:bg-primary/5 transition-all text-label-md font-label-md" onclick="setTimer(50)">50 min</button>
+<button class="px-6 py-2 rounded-full border border-white/10 hover:border-primary/50 hover:bg-primary/5 transition-all text-label-md font-label-md text-tertiary" onclick="setTimer(15)">15 min Break</button>
+</div>
+</div>
+<!-- Integrated Playlists -->
+<div class="w-full">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Integrated Study Playlists</h3>
+<a class="text-primary font-label-md text-label-md hover:underline" href="#">View All</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Card 1 -->
+<div class="glass-panel p-4 rounded-xl group cursor-pointer hover:shadow-2xl hover:shadow-primary/5 transition-all">
+<div class="aspect-square rounded-lg mb-4 overflow-hidden relative">
+<img alt="Lo-Fi Study Beats" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A moody, cinematic photograph of a desk with a warm desk lamp lighting an open book and a pair of high-end headphones. The background is a dark room with subtle purple neon light reflecting off a window. The atmosphere is quiet, focused, and scholarly. Minimalist aesthetics with deep blacks and rich indigo tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBv7XfKLDh0kFPBhBGj9pgX2YYAFrSRBkCtBeVRM7p8JKj_ymX9r3wtYXSQHtqbfHFf9G2HIVxc0j4dcODxoOSSvL22Itrb0X10679PextiAK3oU3R2_-fxPOhjOeaAMb5Ojw5whfi8YoOQeiFomnBdk_k2jtCWnT6dlHrtE9YxtjwFUBL4fEgPyImc3JZr6YLP3atW_jphLjIPFKQ_VMis0BVOQfiG0GZnTYvBPkxMKmyVvNji2XrEL37nZbKCwaH4ZC7SkwQcOjM">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+<span class="material-symbols-outlined text-white text-4xl" data-icon="play_circle" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+</div>
+</div>
+<h4 class="font-headline-sm text-body-md text-on-surface truncate">Deep Focus Techno</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Instrumental / 120 BPM</p>
+<button class="w-full mt-4 flex items-center justify-center gap-2 py-2 rounded-lg border border-primary/20 text-primary font-label-sm text-label-sm hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="sync">sync</span>
+                            Sync with Timer
+                        </button>
+</div>
+<!-- Card 2 -->
+<div class="glass-panel p-4 rounded-xl group cursor-pointer hover:shadow-2xl hover:shadow-primary/5 transition-all">
+<div class="aspect-square rounded-lg mb-4 overflow-hidden relative">
+<img alt="Ambient Flows" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A clean, minimalist 3D rendering of floating geometric shapes in a soft purple mist. The style is modern glassmorphism with frosted textures and sharp white highlights. High-key lighting creates a dreamlike, ethereal vibe perfect for ambient music covers. Cohesive color palette of violet, obsidian, and silver." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHp3P32NMYF-vQQLa9F0PbbNomlpT4-n9S7RKTAiBc6Z2E3t2WvucW2bSxQ7qzsS1O9EfDgibjS14IPXmoKATux4oGTFsZKlK2FP5dq2NFDjTvJBEeZOMrmUQudu2E34ZC3rsr58o0J0HpN8mrRshDeJ65kgUTzXVDbOh9VxH6XYKCKC3E_J4SWGz0V9UMZmH9CdrdQTCWgV-SPN9-BB5QtNFtyq8HNd1F5S21U34SXxpxaHemLQruNTBtSIXZUEIQJZHou7z37Ps">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+<span class="material-symbols-outlined text-white text-4xl" data-icon="play_circle" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+</div>
+</div>
+<h4 class="font-headline-sm text-body-md text-on-surface truncate">Ethereal Ambience</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Generative / Soundscapes</p>
+<button class="w-full mt-4 flex items-center justify-center gap-2 py-2 rounded-lg border border-primary/20 text-primary font-label-sm text-label-sm hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="sync">sync</span>
+                            Sync with Timer
+                        </button>
+</div>
+<!-- Card 3 -->
+<div class="glass-panel p-4 rounded-xl group cursor-pointer hover:shadow-2xl hover:shadow-primary/5 transition-all">
+<div class="aspect-square rounded-lg mb-4 overflow-hidden relative">
+<img alt="Synth Concentration" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Close up shot of a retro-futuristic audio synthesizer with glowing green and purple LED buttons in a dark studio. The knobs and faders are sharp and metallic. Moody, tech-forward aesthetic with shallow depth of field. The lighting is dominated by primary purple and hacker green neon accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCggz3cX3wMMzbKgsLkiQf6UN6cMf1M2z7cSJWPkCG3rfwsdC0yG2xP6hHl_3klgR0t6ry57OKTnKHsvs80-HD_7xvmgY4KgXFg8w7JKRweDVxXkQjZvF8LRh6_X4-71ls4OUK50Sxcy7f74Ol4yRThtqzl2J6E4t4C1_ISCo7kAJVNQWhmEkVKfq2r4R7DoibZHIPpkm15SnvN2MppS4d8eZNy3RWQfRINBU24a9HJ7Mkty6WK6Td6u6c1ecrQZZmk7HltIB22VmI">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+<span class="material-symbols-outlined text-white text-4xl" data-icon="play_circle" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+</div>
+</div>
+<h4 class="font-headline-sm text-body-md text-on-surface truncate">Flow State Tracks</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Electronic / 90 BPM</p>
+<button class="w-full mt-4 flex items-center justify-center gap-2 py-2 rounded-lg border border-primary/20 text-primary font-label-sm text-label-sm hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="sync">sync</span>
+                            Sync with Timer
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Player Bar (Shell) -->
+<footer class="fixed bottom-0 left-0 w-full h-player-height z-50 flex items-center justify-between px-gutter bg-surface-container-high/95 backdrop-blur-2xl border-t border-white/10">
+<!-- Now Playing -->
+<div class="flex items-center gap-4 w-1/3">
+<div class="w-14 h-14 rounded bg-surface-container-highest overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A macro shot of a iridescent vinyl record spinning on a high-end turntable. The surface of the record reflects vibrant streaks of purple, blue, and pink light. Sophisticated dark mode vibe with sharp details and luxurious textures. Lighting is low-key and dramatic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQHVoxyktu_z9VxbanRg0zIe9YXntiSML1hvZtv0skObM9qjcA5z9KKoztSR1WZmTZ95FxgPZy18_Il-z792L5FfHcrC4NletMqiFnB14yq_3XaG5U7JbeFVXzOqYY_CT_qJAkxUStwWOi8yDhtA9sNazqAVoRy9cPofK0gH5L3mrN2ZsLRwHZvCO_j1PgySEHCXcz1qcAGpZhkL0KMYBLcFD-lvGOyUL4NoEbt8VfZ239Ub0OQuEnjOgyA_Ooxp0pUPPy9nLAJqI">
+</div>
+<div>
+<p class="font-body-md text-body-md text-on-surface font-semibold truncate">Lumina Drift</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Focus Artist</p>
+</div>
+<span class="material-symbols-outlined text-primary ml-2" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+<!-- Player Controls -->
+<div class="flex flex-col items-center gap-2 w-1/3">
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-on-surface cursor-pointer text-xl" data-icon="shuffle">shuffle</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-on-surface cursor-pointer text-2xl" data-icon="skip_previous">skip_previous</span>
+<button class="w-10 h-10 bg-on-surface text-surface rounded-full flex items-center justify-center hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="pause" style="font-variation-settings: 'FILL' 1;">pause</span>
+</button>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-on-surface cursor-pointer text-2xl" data-icon="skip_next">skip_next</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-on-surface cursor-pointer text-xl" data-icon="repeat">repeat</span>
+</div>
+<div class="w-full flex items-center gap-2 max-w-md">
+<span class="font-label-sm text-label-sm text-on-surface-variant">2:14</span>
+<div class="h-1 bg-white/10 flex-1 rounded-full overflow-hidden group cursor-pointer relative">
+<div class="h-full bg-gradient-to-r from-primary to-primary-container w-[60%] rounded-full"></div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">3:45</span>
+</div>
+</div>
+<!-- Volume/Tools -->
+<div class="flex items-center justify-end gap-4 w-1/3">
+<span class="material-symbols-outlined text-primary" data-icon="timer">timer</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-on-surface cursor-pointer" data-icon="lyrics">lyrics</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-on-surface cursor-pointer" data-icon="queue_music">queue_music</span>
+<div class="flex items-center gap-2 w-24">
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="volume_up">volume_up</span>
+<div class="h-1 bg-white/10 flex-1 rounded-full">
+<div class="h-full bg-on-surface-variant w-1/2 rounded-full"></div>
+</div>
+</div>
+</div>
+</footer>
+<script>
+        let timeLeft = 25 * 60;
+        let timerId = null;
+        let isRunning = false;
+        const totalDuration = 25 * 60;
+        const display = document.getElementById('timer-display');
+        const circle = document.getElementById('progress-circle');
+        const toggleBtn = document.getElementById('toggle-timer');
+        const circumference = 2 * Math.PI * 150;
+
+        function updateDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            display.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            
+            const offset = circumference - (timeLeft / (25 * 60)) * circumference;
+            circle.style.strokeDashoffset = isNaN(offset) ? 0 : offset;
+        }
+
+        function setTimer(minutes) {
+            timeLeft = minutes * 60;
+            updateDisplay();
+            if (isRunning) toggleTimer();
+        }
+
+        function toggleTimer() {
+            const icon = toggleBtn.querySelector('.material-symbols-outlined');
+            if (isRunning) {
+                clearInterval(timerId);
+                icon.textContent = 'play_arrow';
+            } else {
+                timerId = setInterval(() => {
+                    timeLeft--;
+                    updateDisplay();
+                    if (timeLeft <= 0) {
+                        clearInterval(timerId);
+                        alert('Session Complete!');
+                    }
+                }, 1000);
+                icon.textContent = 'pause';
+            }
+            isRunning = !isRunning;
+        }
+
+        toggleBtn.addEventListener('click', toggleTimer);
+        document.getElementById('reset-timer').addEventListener('click', () => {
+            clearInterval(timerId);
+            isRunning = false;
+            timeLeft = 25 * 60;
+            toggleBtn.querySelector('.material-symbols-outlined').textContent = 'play_arrow';
+            updateDisplay();
+        });
+
+        updateDisplay();
+    </script>
+</body></html>
