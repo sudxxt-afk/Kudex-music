@@ -15,7 +15,7 @@ const TmaBridge: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     try {
       const launchParams = retrieveLaunchParams();
       if (launchParams && String(launchParams.initDataRaw)) {
-        AuthService.telegramLogin(launchParams.initDataRaw).then(() => {
+        AuthService.telegramLogin(launchParams.initDataRaw as string).then(() => {
           setIsReady(true);
         }).catch(err => {
           console.error('TMA Login failed', err);
