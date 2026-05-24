@@ -1,0 +1,21 @@
+{
+  "name": "kudex-shared-core",
+  "version": "1.0.0",
+  "description": "Shared Frontend Core for Kudex Music Player",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "axios": "^1.6.8",
+    "zustand": "^4.5.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.30",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2",
+    "typescript": "^5.4.3"
+  }
+}
