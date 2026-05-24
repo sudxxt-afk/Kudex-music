@@ -1,0 +1,11 @@
+{
+  "settings": {
+    "title": "Settings"
+  },
+  "search": {
+    "placeholder": "Search tracks..."
+  },
+  "player": {
+    "pomodoro": "Pomodoro"
+  }
+}

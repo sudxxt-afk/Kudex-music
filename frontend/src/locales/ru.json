@@ -1,0 +1,11 @@
+{
+  "settings": {
+    "title": "Настройки"
+  },
+  "search": {
+    "placeholder": "Поиск треков..."
+  },
+  "player": {
+    "pomodoro": "Помодоро"
+  }
+}
