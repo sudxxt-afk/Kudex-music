@@ -9,9 +9,17 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from database import get_db, logger
 from models import User
-from auth import create_access_token
+from src.core.security import create_access_token, get_current_user
+from src.core.limiter import init_limiter
+from fastapi_limiter.depends import RateLimiter
+from contextlib import asynccontextmanager
 
-app = FastAPI(title="Kudex Music API")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await init_limiter()
+    yield
+
+app = FastAPI(title="Kudex Music API", lifespan=lifespan)
 
 # Схема для авторизации
 class LoginRequest(BaseModel):
@@ -35,6 +43,17 @@ async def client_ip_middleware(
     request.state.client_ip = client_ip
     
     response: Response = await call_next(request)
+    return response
+
+@app.middleware("http")
+async def security_headers_middleware(
+    request: Request,
+    call_next: Callable[[Request], Coroutine[Any, Any, Response]]
+) -> Response:
+    response: Response = await call_next(request)
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["Content-Security-Policy"] = "default-src 'self'; script-src 'self'; connect-src 'self'"
     return response
 
 # Middleware для обработки исключений SQLAlchemy (ошибок БД)
@@ -93,3 +112,24 @@ async def login(
         "access_token": token,
         "token_type": "bearer"
     }
+
+@app.post("/api/v1/import")
+async def import_playlist(
+    current_user: User = Depends(get_current_user),
+    _ = Depends(RateLimiter(times=3, seconds=60))
+):
+    """Импорт плейлиста. Ограничение 3 запроса в минуту."""
+    return {"message": "Import started", "user_id": current_user.telegram_id}
+
+@app.get("/api/v1/search")
+async def search_tracks(
+    current_user: User = Depends(get_current_user),
+    _ = Depends(RateLimiter(times=10, seconds=60))
+):
+    """Поиск треков. Ограничение 10 запросов в минуту."""
+    return {"message": "Search results", "user_id": current_user.telegram_id}
+
+@app.get("/health")
+async def health_check():
+    """Эндпоинт проверки работоспособности сервиса."""
+    return {"status": "ok"}

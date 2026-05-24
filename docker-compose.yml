@@ -1,0 +1,134 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: kudex_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: kudex
+      POSTGRES_PASSWORD: kudex_password
+      POSTGRES_DB: kudex_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - internal_network
+    expose:
+      - "5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kudex -d kudex_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    logging: &logging_conf
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  redis:
+    image: redis:7-alpine
+    container_name: kudex_redis
+    restart: unless-stopped
+    networks:
+      - internal_network
+    expose:
+      - "6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    logging: *logging_conf
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend.Dockerfile
+    container_name: kudex_backend
+    restart: unless-stopped
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - internal_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=Host(`api.${DOMAIN}`)"
+      - "traefik.http.routers.backend.entrypoints=websecure"
+      - "traefik.http.routers.backend.tls.certresolver=myresolver"
+      - "traefik.http.services.backend.loadbalancer.server.port=8000"
+    logging: *logging_conf
+
+  worker:
+    build:
+      context: .
+      dockerfile: backend.Dockerfile
+    container_name: kudex_worker
+    restart: unless-stopped
+    env_file:
+      - .env
+    depends_on:
+      redis:
+        condition: service_healthy
+      db:
+        condition: service_healthy
+    # Пример команды, если бы мы использовали rq, но пока ставим dummy или rq
+    # Чтобы не падал, используем tail -f /dev/null или просто rq
+    command: ["python", "-c", "import time; print('Worker started'); time.sleep(999999)"]
+    networks:
+      - internal_network
+    logging: *logging_conf
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend.Dockerfile
+    container_name: kudex_frontend
+    restart: unless-stopped
+    networks:
+      - internal_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.frontend.entrypoints=websecure"
+      - "traefik.http.routers.frontend.tls.certresolver=myresolver"
+      - "traefik.http.services.frontend.loadbalancer.server.port=80"
+    logging: *logging_conf
+
+  traefik:
+    image: traefik:v3.0
+    container_name: kudex_traefik
+    restart: unless-stopped
+    command:
+      - "--api.insecure=false"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      # Redirect HTTP to HTTPS
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      # Let's Encrypt
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.email=${ACME_EMAIL}"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "letsencrypt:/letsencrypt"
+    networks:
+      - internal_network
+    logging: *logging_conf
+
+volumes:
+  postgres_data:
+  letsencrypt:
+
+networks:
+  internal_network:
+    driver: bridge
