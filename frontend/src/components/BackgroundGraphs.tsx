@@ -18,19 +18,47 @@ export const BackgroundGraphs: React.FC = () => {
     const connectionDistance = 150;
     const baseSpeed = 0.15;
 
+    const init = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      
+      const colorStr = getComputedStyle(document.body).getPropertyValue('--primary').trim();
+      let r=224, g=182, b=255;
+      if (colorStr && colorStr.startsWith('#')) {
+        const hex = colorStr.replace('#', '');
+        r = parseInt(hex.substring(0, 2), 16) || 224;
+        g = parseInt(hex.substring(2, 4), 16) || 182;
+        b = parseInt(hex.substring(4, 6), 16) || 255;
+      }
+      
+      particles = [];
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle(r, g, b));
+      }
+      return { r, g, b };
+    };
+
+    let themeColor = { r: 224, g: 182, b: 255 };
+
     class Particle {
       x: number;
       y: number;
       vx: number;
       vy: number;
       radius: number;
+      r: number;
+      g: number;
+      b: number;
 
-      constructor() {
+      constructor(r: number, g: number, b: number) {
         this.x = Math.random() * canvas!.width;
         this.y = Math.random() * canvas!.height;
         this.vx = (Math.random() - 0.5) * baseSpeed;
         this.vy = (Math.random() - 0.5) * baseSpeed;
         this.radius = Math.random() * 2 + 1;
+        this.r = r;
+        this.g = g;
+        this.b = b;
       }
 
       update() {
@@ -45,43 +73,16 @@ export const BackgroundGraphs: React.FC = () => {
         if (!ctx) return;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        const colorStr = getComputedStyle(document.body).getPropertyValue('--primary').trim();
-        const fallbackColor = '224, 182, 255'; // #e0b6ff in RGB
-        
-        let r=224, g=182, b=255;
-        if (colorStr && colorStr.startsWith('#')) {
-          const hex = colorStr.replace('#', '');
-          r = parseInt(hex.substring(0, 2), 16) || 224;
-          g = parseInt(hex.substring(2, 4), 16) || 182;
-          b = parseInt(hex.substring(4, 6), 16) || 255;
-        }
-
-        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, 0.3)`;
+        ctx.fillStyle = `rgba(${this.r}, ${this.g}, ${this.b}, 0.3)`;
         ctx.fill();
       }
     }
 
-    const init = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      particles = [];
-      for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle());
-      }
-    };
+    themeColor = init();
 
     const animate = () => {
       if (!ctx) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      const colorStr = getComputedStyle(document.body).getPropertyValue('--primary').trim();
-      let r=224, g=182, b=255;
-      if (colorStr && colorStr.startsWith('#')) {
-        const hex = colorStr.replace('#', '');
-        r = parseInt(hex.substring(0, 2), 16) || 224;
-        g = parseInt(hex.substring(2, 4), 16) || 182;
-        b = parseInt(hex.substring(4, 6), 16) || 255;
-      }
 
       for (let i = 0; i < particles.length; i++) {
         particles[i].update();
@@ -95,7 +96,7 @@ export const BackgroundGraphs: React.FC = () => {
           if (distance < connectionDistance) {
             ctx.beginPath();
             const opacity = 1 - distance / connectionDistance;
-            ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${opacity * 0.2})`;
+            ctx.strokeStyle = `rgba(${themeColor.r}, ${themeColor.g}, ${themeColor.b}, ${opacity * 0.2})`;
             ctx.lineWidth = 1;
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);

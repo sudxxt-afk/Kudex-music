@@ -22,9 +22,7 @@ export const App: React.FC = () => {
   }, [setTheme]);
 
   return (
-    <>
-      <BackgroundGraphs />
-      <Routes>
+    <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/" element={<PrivateRoute><AppLayout /></PrivateRoute>}>
         <Route index element={<Home />} />
@@ -36,6 +34,5 @@ export const App: React.FC = () => {
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
-    </>
   );
 };

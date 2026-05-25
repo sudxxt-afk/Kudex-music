@@ -9,13 +9,14 @@ import { ErrorBoundary } from './ErrorBoundary';
 import { GlobalLoader } from './GlobalLoader';
 import { Toaster } from 'react-hot-toast';
 
+import { BackgroundGraphs } from './BackgroundGraphs';
+
 export const AppLayout: React.FC = () => {
   return (
     <div className="bg-surface-container-lowest text-on-surface font-body-md text-body-md antialiased overflow-x-hidden selection:bg-primary/30 selection:text-primary min-h-screen flex relative">
+      <BackgroundGraphs />
       <GlobalLoader />
       <Toaster position="top-right" />
-      
-      {/* Background canvas handled in App.tsx now */}
       
       <Sidebar />
       <TopNavBar />
