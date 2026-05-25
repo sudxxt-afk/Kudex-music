@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { MusicService, Track } from '../services/MusicService';
+import { MusicService } from '../services/MusicService';
+import { Track } from '../types';
 import { usePlayerStore } from '../store/playerStore';
 import { useTranslation } from 'react-i18next';
 
