@@ -1,11 +1,43 @@
 {
+  "nav": {
+    "home": "Главная",
+    "library": "Медиатека",
+    "explore": "Поиск и Импорт",
+    "integrations": "Интеграции",
+    "pomodoro": "Таймер Focus",
+    "settings": "Настройки"
+  },
   "settings": {
-    "title": "Настройки"
+    "title": "Настройки",
+    "subtitle": "Управление вашим Kudex.",
+    "interface": "Интерфейс",
+    "theme": "Тема",
+    "theme_desc": "Внешний вид приложения.",
+    "language": "Язык",
+    "language_desc": "Предпочитаемый язык.",
+    "account": "Аккаунт",
+    "linked_id": "Привязанный Telegram ID",
+    "manage_connection": "Управление",
+    "logout": "Выйти со всех устройств",
+    "quality": "Качество и Сеть",
+    "low_data": "Экономия трафика",
+    "low_data_desc": "Снижает качество звука для экономии интернета.",
+    "audio_quality": "Качество звука",
+    "audio_quality_desc": "Предпочтительное качество.",
+    "storage": "Хранилище",
+    "cache": "Кэш приложения",
+    "cache_desc": "Используется 1.2 ГБ.",
+    "clear_cache": "Очистить кэш"
   },
-  "search": {
-    "placeholder": "Поиск треков..."
+  "home": {
+    "greeting": "С возвращением",
+    "trending": "В тренде",
+    "for_you": "Для вас"
   },
-  "player": {
-    "pomodoro": "Помодоро"
+  "explore": {
+    "title": "Поиск и Импорт",
+    "subtitle": "Перенесите свои треки из Spotify, Apple Music или Яндекс Музыки.",
+    "import_btn": "Импорт",
+    "placeholder": "Вставьте ссылку на плейлист..."
   }
 }

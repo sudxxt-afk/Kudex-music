@@ -1,7 +1,12 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export const Sidebar: React.FC = () => {
+  const { t } = useTranslation();
+
+  const navClass = ({ isActive }: { isActive: boolean }) => 
+    `flex flex-col items-center justify-center p-3 rounded-2xl group transition-all duration-300 ${isActive ? 'bg-primary/10 text-primary' : 'text-on-surface-variant hover:bg-white/5 hover:text-on-surface'}`;
   const getNavClass = ({ isActive }: { isActive: boolean }) => 
     isActive 
       ? "flex items-center gap-4 py-3 font-label-md text-label-md text-primary font-bold border-l-4 border-primary pl-4 bg-white/5 scale-95 transition-transform shadow-[inset_0_0_20px_rgba(224,182,255,0.05)]"
@@ -9,46 +14,43 @@ export const Sidebar: React.FC = () => {
 
   return (
     <nav className="fixed left-0 top-0 h-full w-sidebar-width bg-surface-container/90 backdrop-blur-xl flex flex-col py-margin-page z-40 border-r border-white/5 hidden md:flex">
-      {/*  Header / Brand  */}
-      <Link to="/" className="px-6 mb-8 flex flex-row items-center gap-3">
-        <img alt="Kudex Logo" className="w-8 h-8 object-contain" src="https://lh3.googleusercontent.com/aida/ADBb0uin_iXZTnSWGq3sYdyHBfo045EN961zjT-77UvFA8pGxfgkKgdLL57Rr2LLWBXDmOhu9OacJRlBgQ3RjA1egZBOUPGNHZknwyAf4ZrLDiiuFaYlUMTFUm2EXdlp1n27YXouNv_C4lmYNLHwS-0bLK_7jNoH1lNPxq7xCQ8CoXtrmgxqEQo3ucf0WMmlE-PtZYpvtHe0fQtKvZPZ8XX76imrbLesUUFK2xa8adCmEfIz6p5mfTrpZORfPXc" />
-        <h1 className="font-headline-md text-headline-md font-black text-primary tracking-tight transition-all duration-300 hover:opacity-80">Kudex</h1>
-      </Link>
-      {/*  CTA  */}
-      <div className="px-6 mb-8">
-        <button className="w-full bg-primary text-on-primary font-label-md text-label-md py-3 rounded-full hover:scale-95 transition-transform duration-200 flex items-center justify-center gap-2 font-bold shadow-[0_0_15px_rgba(224,182,255,0.2)] hover:shadow-[0_0_25px_rgba(224,182,255,0.4)]">
-          <span className="material-symbols-outlined" >add</span>
-          New Playlist
-        </button>
+      {/*  Logo Area  */}
+      <div className="px-6 pb-8">
+        <Link className="flex items-center gap-3 group" to="/">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-tertiary flex items-center justify-center animate-spin-slow">
+            <span className="material-symbols-outlined text-black text-sm">graphic_eq</span>
+          </div>
+          <span className="font-display-md text-display-md tracking-wider text-on-surface group-hover:text-primary transition-colors">KUDEX.ARCH</span>
+        </Link>
       </div>
       {/*  Navigation Tabs  */}
       <div className="flex-1 flex flex-col gap-2">
         <NavLink className={getNavClass} to="/">
           <span className="material-symbols-outlined">home</span>
-          Home
+          {t('nav.home')}
         </NavLink>
         <NavLink className={getNavClass} to="/explore">
           <span className="material-symbols-outlined">search</span>
-          Explore
+          {t('nav.explore')}
         </NavLink>
         <NavLink className={getNavClass} to="/library">
           <span className="material-symbols-outlined">library_music</span>
-          Library
+          {t('nav.library')}
         </NavLink>
         <NavLink className={getNavClass} to="/integrations">
           <span className="material-symbols-outlined">api</span>
-          Integrations
+          {t('nav.integrations')}
         </NavLink>
       </div>
       {/*  Footer Tab  */}
-      <div className="px-6 mt-auto flex flex-col gap-2">
+      <div className="flex flex-col gap-2 pb-6 mt-auto">
         <NavLink className={getNavClass} to="/pomodoro">
           <span className="material-symbols-outlined">timer</span>
-          Pomodoro
+          {t('nav.pomodoro')}
         </NavLink>
         <NavLink className={getNavClass} to="/settings">
           <span className="material-symbols-outlined">settings</span>
-          Settings
+          {t('nav.settings')}
         </NavLink>
       </div>
     </nav>

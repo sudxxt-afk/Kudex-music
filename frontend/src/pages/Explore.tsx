@@ -1,22 +1,24 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const Explore: React.FC = () => {
+  const { t } = useTranslation();
   return (
     <>
       
 <div className="max-w-5xl mx-auto space-y-section-gap">
 {/*  Import Section  */}
 <section className="space-y-6">
-<h2 className="font-headline-md text-headline-md text-on-surface">Explore &amp; Import</h2>
-<p className="font-body-lg text-body-lg text-on-surface-variant">Seamlessly transition your library from Spotify, Apple Music, or Yandex.</p>
+<h2 className="font-headline-md text-headline-md text-on-surface">{t('explore.title')}</h2>
+<p className="font-body-lg text-body-lg text-on-surface-variant">{t('explore.subtitle')}</p>
 <div className="glass-panel p-6 rounded-xl flex gap-4 items-center">
 <div className="relative flex-grow">
 <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">link</span>
-<input className="w-full bg-surface-container-highest border border-white/10 rounded-lg py-4 pl-12 pr-4 font-label-md text-label-md text-on-surface placeholder:text-outline input-glow transition-all" placeholder="Paste playlist link here..." type="text" />
+<input className="w-full bg-surface-container-highest border border-white/10 rounded-lg py-4 pl-12 pr-4 font-label-md text-label-md text-on-surface placeholder:text-outline input-glow transition-all" placeholder={t('explore.placeholder')} type="text" />
 </div>
 <button className="bg-primary-container text-on-primary-container px-8 py-4 rounded-lg font-headline-sm text-headline-sm hover:opacity-90 transition-opacity flex items-center gap-2" onClick={() => document.getElementById('import-modal')?.classList.remove('hidden')}>
 <span className="material-symbols-outlined">download</span>
-                        Import
+                        {t('explore.import_btn')}
                     </button>
 </div>
 </section>

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { MusicService } from '../services/MusicService';
+import { MusicService, Track } from '../services/MusicService';
 import { usePlayerStore } from '../store/playerStore';
-import { Track } from '../types';
+import { useTranslation } from 'react-i18next';
 
 export const Home: React.FC = () => {
+  const { t } = useTranslation();
   const [tracks, setTracks] = useState<Track[]>([]);
   const { setTrack, currentTrack, isPlaying, togglePlay } = usePlayerStore();
 
@@ -96,7 +97,7 @@ export const Home: React.FC = () => {
 <div className="col-span-1 md:col-span-12 lg:col-span-4 rounded-2xl bg-surface-container-high/80 backdrop-blur-xl border border-white/5 p-6 group hover:bg-surface-container/90 transition-all cursor-pointer flex flex-col gap-4">
 <div className="flex items-center justify-between mb-2">
 <h3 className="font-headline-sm text-[18px] font-bold text-on-surface">Recent Imports</h3>
-<span className="material-symbols-outlined text-on-surface-variant text-[20px]">library_add</span>
+<span className="material-symbols-outlined text-on-surface-variant text-[20px]">folder_zip</span>
 </div>
 <div className="flex flex-col gap-4 flex-1 justify-center">
 <div className="flex items-center gap-4 hover:bg-white/5 p-2 -mx-2 rounded-lg transition-colors">

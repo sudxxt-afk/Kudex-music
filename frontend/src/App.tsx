@@ -11,6 +11,8 @@ import { Settings } from './pages/Settings';
 import { Login } from './pages/Login';
 import { useTheme } from './theme/useTheme';
 
+import { BackgroundGraphs } from './components/BackgroundGraphs';
+
 export const App: React.FC = () => {
   const { setTheme } = useTheme();
 
@@ -20,7 +22,9 @@ export const App: React.FC = () => {
   }, [setTheme]);
 
   return (
-    <Routes>
+    <>
+      <BackgroundGraphs />
+      <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/" element={<PrivateRoute><AppLayout /></PrivateRoute>}>
         <Route index element={<Home />} />
@@ -32,5 +36,6 @@ export const App: React.FC = () => {
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
+    </>
   );
 };

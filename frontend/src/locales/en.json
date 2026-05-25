@@ -1,11 +1,43 @@
 {
+  "nav": {
+    "home": "Home",
+    "library": "Library",
+    "explore": "Explore & Import",
+    "integrations": "Integrations",
+    "pomodoro": "Focus Timer",
+    "settings": "Settings"
+  },
   "settings": {
-    "title": "Settings"
+    "title": "Settings",
+    "subtitle": "Manage your Kudex experience.",
+    "interface": "Interface",
+    "theme": "Theme",
+    "theme_desc": "Visual aesthetic.",
+    "language": "Language",
+    "language_desc": "Preferred language.",
+    "account": "Account",
+    "linked_id": "Linked Telegram ID",
+    "manage_connection": "Manage Connection",
+    "logout": "Logout from all devices",
+    "quality": "Quality & Network",
+    "low_data": "Low-Data Mode",
+    "low_data_desc": "Reduces audio quality to save bandwidth.",
+    "audio_quality": "Audio Quality",
+    "audio_quality_desc": "Streaming quality preference.",
+    "storage": "Storage",
+    "cache": "Storage Cache",
+    "cache_desc": "Currently using 1.2 GB of local storage.",
+    "clear_cache": "Clear Cache"
   },
-  "search": {
-    "placeholder": "Search tracks..."
+  "home": {
+    "greeting": "Welcome back",
+    "trending": "Trending",
+    "for_you": "For You"
   },
-  "player": {
-    "pomodoro": "Pomodoro"
+  "explore": {
+    "title": "Explore & Import",
+    "subtitle": "Seamlessly transition your library from Spotify, Apple Music, or Yandex.",
+    "import_btn": "Import",
+    "placeholder": "Paste playlist link here..."
   }
 }

@@ -15,8 +15,7 @@ export const AppLayout: React.FC = () => {
       <GlobalLoader />
       <Toaster position="top-right" />
       
-      {/* Background */}
-      <canvas className="fixed inset-0 w-full h-full z-0 pointer-events-none" id="bg-canvas"></canvas>
+      {/* Background canvas handled in App.tsx now */}
       
       <Sidebar />
       <TopNavBar />
